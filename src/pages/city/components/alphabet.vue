@@ -3,6 +3,11 @@
     <li class="item"
         v-for="item of letters"
         :key="item"
+        :ref="item"
+        @touchstart="handleTouchStart"
+        @touchmove="handleTouchMove"
+        @touchend="handleTouchEnd"
+        @click="handleLetterClick"
     >
       {{item}}
     </li>
@@ -12,6 +17,12 @@
 <script>
 export default {
   name: 'CityAlphabet',
+  data () {
+    return {
+      touchStatus: true,
+      timer: null
+    }
+  },
   props: {
     cities: Object
   },
@@ -22,6 +33,32 @@ export default {
         letters.push(i)
       }
       return letters
+    },
+    startY () {
+      return this.$refs['A'][0].offsetTop
+    }
+  },
+  methods: {
+    handleLetterClick (e) {
+      this.$emit('change', e.target.innerText)
+    },
+    handleTouchStart () {
+      this.touchStatus = true
+    },
+    handleTouchMove (e) {
+      if (this.timer) {
+        clearTimeout(this.timer)
+      }
+      this.timer = setTimeout(() => {
+        if (this.touchStatus) {
+          const touchY = e.touches[0].clientY - 79
+          const index = Math.floor((touchY - this.startY) / 20)
+          this.$emit('change', this.letters[index])
+        }
+      }, 16)
+    },
+    handleTouchEnd () {
+      this.touchStatus = false
     }
   }
 }
