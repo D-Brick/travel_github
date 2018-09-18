@@ -5,6 +5,7 @@
            placeholder="请输入城市名或拼音"
            v-model="keyword">
     <div class="search-content"
+         ref="content"
          v-show="hasList()">
       <ul>
         <li class="item border-bottom"
@@ -25,6 +26,7 @@
 </template>
 
 <script>
+import BScroll from 'better-scroll'
 import { mapActions } from 'vuex'
 export default {
   name: 'CitySearch',
@@ -37,6 +39,9 @@ export default {
   },
   props: {
     cities: Object
+  },
+  mounted () {
+    this.scroll = new BScroll(this.$refs.content)
   },
   watch: {
     keyword () {
@@ -88,6 +93,7 @@ export default {
       border-radius: .06rem
       color: #666
     .search-content
+      overflow: hidden
       position: absolute
       top: 1.58rem
       left: 0
