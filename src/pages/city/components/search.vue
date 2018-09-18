@@ -10,6 +10,7 @@
         <li class="item border-bottom"
             v-for="item of cityList"
             :key="item.id"
+            @click="handleCityClick(item.name)"
         >
           {{item.name}}
         </li>
@@ -24,6 +25,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 export default {
   name: 'CitySearch',
   data () {
@@ -61,7 +63,12 @@ export default {
     },
     hasCity () {
       return !this.cityList.length
-    }
+    },
+    handleCityClick (city) {
+      this.changeCity(city)
+      this.$router.push('/')
+    },
+    ...mapActions(['changeCity'])
   }
 }
 </script>

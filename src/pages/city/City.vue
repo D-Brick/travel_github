@@ -15,10 +15,10 @@
 </template>
 
 <script>
-import CityHeader from './components/header'
-import CitySearch from './components/search'
-import CityList from './components/list'
-import CityAlphabet from './components/alphabet'
+import CityHeader from './components/Header'
+import CitySearch from './components/Search'
+import CityList from './components/List'
+import CityAlphabet from './components/Alphabet'
 import axios from 'axios'
 export default {
   name: 'City',
